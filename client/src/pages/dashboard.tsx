@@ -10,6 +10,7 @@ export default function Dashboard() {
                 <li><Link to='/medication'>Your Medication</Link></li>
                 <li><Link to='/rewards'>Your Rewards</Link></li>
                 <li><Link to='/patent-page'>Patent Information</Link></li>
+                <li><Link to='/profile'>Profile</Link></li>
                 <li><Link to='/'>Logout</Link></li>
             </ul>
         </>

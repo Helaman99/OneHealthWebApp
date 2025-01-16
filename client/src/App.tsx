@@ -5,6 +5,7 @@ import Home from './pages/home';
 import Dashboard from './pages/dashboard.tsx';
 import { BrowserRouter } from 'react-router';
 import { AppProvider } from './contexts/userContexts';
+import Profile from './pages/profile.tsx';
 
 
 
@@ -17,6 +18,7 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/rewards' element={<Rewards />} />
           <Route path='/dashboard' element={<Dashboard />} />
+          <Route path='/profile' element={<Profile />} />
         </Routes>
         </BrowserRouter>
     </AppProvider>
