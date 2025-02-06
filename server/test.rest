@@ -1,29 +1,45 @@
 ### 
-POST http://localhost:3000
+POST http://localhost:3000/users
 Content-Type: application/json
 
 {
-    "name": "Larry",
-    "location": "Georgia",
+    "name": "Jerimiah",
+    "location": "New York",
     "points": 100
 }
 
 ###
 
-###
-GET http://localhost:3000
-###
+POST http://localhost:3000/rewards
+Content-Type: application/json
 
-GET http://localhost:3000/2
+{
+    "name": "Free Coffee",
+    "points": 100
+}
+
+###
+GET http://localhost:3000/users
+###
+GET http://localhost:3000/users/rewards/3
+###
+POST  http://localhost:3000/users/rewards/2
+Content-Type: application/json
+
+{
+    "user_id": 40,
+    "reward_id": 1
+}
 
 ###
 
 GET http://localhost:3000/rewards
 
 ###
+DELETE http://localhost:3000/rewards/4
 
-
-PUT http://localhost:3000/2
+###
+PUT http://localhost:3000/users/2
 Content-Type: application/json
 
 {
@@ -45,4 +61,19 @@ Content-Type: application/json
 }
 
 ### 
-GET http://localhost:3000/admin
+GET http://localhost:3000/users/rewards/2
+
+###
+
+GET http://localhost:3000/users/rewards/popular
+
+###
+
+GET http://localhost:3000/users/charles/boston
+
+###
+GET http://localhost:3000/rewards
+
+###
+
+GET http://localhost:3000/rewards/name/target%20gift%20card

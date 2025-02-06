@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef} from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import { useAppContext } from '../contexts/userContexts';
+import toTitleCase from "../assets/titleCase";
 
 
 interface User {
@@ -12,6 +12,7 @@ interface User {
   }
 
 export default function Admin(){
+    const { sharedValue } = useAppContext();
     const { setSharedValue } = useAppContext();
     const [id, setId] = useState(0);
     const [name, setName] = useState('');
@@ -20,14 +21,18 @@ export default function Admin(){
     const [menu, setMenu] = useState(false);
     const [updateResponse, setUpdateResponse] = useState('');
     const [updatedPoints, setUpdatedPoints] = useState(0);
+    const [loggedInStatus, setLoggedInStatus] = useState(`Logged in as: ${sharedValue.name}`);
 
 
     useEffect(() => {
         viewAllUsers();
+        if(sharedValue.name == ''){
+            setLoggedInStatus('Not logged in');
+        }
       }, []);
 
     function viewAllUsers() {
-        axios.get('http://localhost:3000')
+        axios.get('http://localhost:3000/users')
         .then((response) => {
           console.log(response);
           setUsers(response.data);
@@ -37,12 +42,18 @@ export default function Admin(){
         });
     }
 
+    function refreshUsers() {
+      viewAllUsers();
+      if(sharedValue.name == ''){
+        setLoggedInStatus('Not logged in');
+      }      
+    }
     function deleteUser(id: number) {
-        axios.delete(`http://localhost:3000/${id}`)
+        axios.delete(`http://localhost:3000/users/${id}`)
         .then((response) => {
           console.log(response);
           setUpdateResponse('User deleted successfully!');
-          viewAllUsers();
+          setSharedValue({id:0, name: "", location: "", points: 0});
         })
         .catch((error) => {
           console.log(error);
@@ -55,13 +66,15 @@ export default function Admin(){
         setName(name);
         setLocation(location);
         setUpdatedPoints(points);
+        viewAllUsers();
     }
     
     function viewUser(id: number) {
-        axios.get(`http://localhost:3000/${id}`)
+        axios.get(`http://localhost:3000/users/${id}`)
         .then((response) => {
           console.log(response);
           setSharedValue(response.data[0]);
+          setLoggedInStatus('Logged in as: ' + response.data[0].name);
         })
         .catch((error) => {
           console.log(error);
@@ -73,7 +86,7 @@ export default function Admin(){
         const inputRefLocation = useRef() as React.MutableRefObject<HTMLInputElement>;
   
         function updateUserByID(id: number) {
-          axios.put(`http://localhost:3000/${id}`, {
+          axios.put(`http://localhost:3000/users/${id}`, {
             name: inputRefName.current.value,
             location: inputRefLocation.current.value,
             points : updatedPoints
@@ -128,15 +141,18 @@ export default function Admin(){
     
     return(
     <> 
+        <h1>Admin Page</h1>
+        <h3>{loggedInStatus}</h3>
         <div className='userButtons'>{
                 users.map(user => 
                   <div key={user.id}>
-                    <Link to = '/'><button onClick={() => viewUser(user.id)}>Go to {user.name}'s Account</button></Link>
-                    <button onClick={() => deleteUser(user.id)}>Delete {user.name}</button>
-                    <button onClick={() => updateUser(user.id,user.name,user.location,user.points)}>Update {user.name}</button>
+                    <button onClick={() => viewUser(user.id)}>Go to {toTitleCase(user.name)}'s Account</button>
+                    <button onClick={() => deleteUser(user.id)}>Delete {toTitleCase(user.name)}'s Account</button>
+                    <button onClick={() => updateUser(user.id,user.name,user.location,user.points)}>Update {toTitleCase(user.name)}'s Account</button>
                   </div>
                 )
         }</div>
+        <button onClick={() => refreshUsers()}>Refresh Users</button>
         {menu && <UpdateMenu />}
         {updateResponse}
     </>   
