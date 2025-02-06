@@ -12,6 +12,7 @@ import Medication from './pages/medications';
 import Admin from './pages/admin';
 import AdminRewards from './pages/admin-rewards';
 import Footer from './components/footer';
+import Dashboard from './pages/dashboard';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path='/' element={<Home />} />
+          <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/rewards' element={<Redeem />} />
           <Route path='/learn' element= {<Learn />} />
           <Route path ='/medication' element={<Medication />} />
