@@ -15,6 +15,7 @@ import Learn from './pages/learn';
 import Medication from './pages/medications';
 import Admin from './pages/admin';
 import AdminRewards from './pages/admin-rewards';
+import Profile from './pages/profile';
 import Footer from './components/footer';
 
 
@@ -37,6 +38,7 @@ function App() {
             <Route path ='/register' element={<Register/>} />
             <Route path='/admin' element={<Admin /> } />
             <Route path='/adminrewards' element={<AdminRewards /> } />
+            <Route path='/profile' element={<Profile /> } />
           </Routes>
           <Footer />
         </BrowserRouter>

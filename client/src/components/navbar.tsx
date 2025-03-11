@@ -41,6 +41,7 @@ export default function Navbar(){
         <Link to='/admin'><span onClick={(e)=> activeLine(e)}>Accounts</span></Link>
         <Link to='/adminrewards'><span onClick={(e)=> activeLine(e)}>Rewards</span></Link>
         <Link to='/register'><span onClick={(e)=> activeLine(e)}>Register</span></Link>
+        <Link to='/profile'><span onClick={(e)=> activeLine(e)}>Profile</span></Link>
     </div>
     )
 }
